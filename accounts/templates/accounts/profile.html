@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="profile-container">
+    <h2>My Profile</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+</div>
+
+<style>
+    /* Profil konteyneri */
+    .profile-container {
+        max-width: 600px; /* Maksimum genişlik */
+        margin: 0 auto; /* Ortalamak için */
+        padding: 20px; /* İç kenar boşluğu */
+        background-color: white; /* Arka plan rengi */
+        border-radius: 10px; /* Köşeleri yuvarlamak için */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Gölge */
+    }
+
+    /* Başlık */
+    .profile-container h2 {
+        text-align: center; /* Başlığı ortala */
+        margin-bottom: 20px; /* Alt boşluk */
+    }
+
+    /* Düğme */
+    .btn-primary {
+        margin-top: 10px; /* Üstteki öğe ile boşluk */
+        padding: 10px 20px; /* İç kenar boşluğu */
+        background-color: #007bff; /* Düğme rengi */
+        color: white; /* Metin rengi */
+        border: none; /* Sınır */
+        border-radius: 5px; /* Köşeleri yuvarlamak */
+        cursor: pointer; /* İmleç değişikliği */
+    }
+
+    /* Düğme üzerine geldiğinde */
+    .btn-primary:hover {
+        background-color: #0056b3; /* Koyu mavi */
+    }
+</style>
+
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="delete-book-container">
+    <h2>Delete Book</h2>
+    <p>Are you sure you want to delete this book: <strong>{{ book.title }}</strong>?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a href="{% url 'my_books' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+<style>
+    /* Şablon stil dosyası */
+    .delete-book-container {
+        max-width: 600px; /* Maksimum genişlik */
+        margin: 0 auto; /* Ortala */
+        padding: 20px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+    }
+</style>
+
+{% endblock %}

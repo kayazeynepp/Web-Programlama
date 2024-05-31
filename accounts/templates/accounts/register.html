@@ -1,0 +1,64 @@
+
+
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-box">
+        <h2>Sign Up</h2>
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-primary" type="submit">Register</button>
+        </form>
+        
+    </div>
+</div>
+<style>
+		body
+		{background-color:{% if theme == 'day' %} #fff {% else %} #333 {% endif %};
+		 color: #333;
+		}
+	</style>
+<style>
+    /* Sayfanın ortasında kutuyu yerleştiren CSS */
+    .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Kutu görünümü ve içeriği */
+    .login-box {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        width: 600px; /* Kutunun genişliğini belirleyin */
+        text-align: center; /* İçeriği ortalayın */
+    }
+
+    /* Butonları eşit boyutlarda yapmak ve metinleri ortalamak için CSS */
+    .button {
+        width: 100px; /* Buton genişliği */
+        height: 40px; /* Buton yüksekliği */
+        margin-top: 10px; /* Üstteki öğeyle boşluk */
+        margin-right: 10px; /* Diğer butonla boşluk */
+        text-align: center; /* Metni yatay olarak ortala */
+        line-height: 40px; /* Metni dikey olarak ortala */
+        padding: 0px;
+}
+
+    /* Cancel butonunun stilini belirleyin */
+    .btn-secondary {
+        background-color: #6c757d; /* Farklı renk için */
+        color: white;
+        border-radius: 5px;
+        padding: 0px;
+        text-decoration: none;
+    }
+</style>
+
+{% endblock %}

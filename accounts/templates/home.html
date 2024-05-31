@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+		body
+		{background-color:{% if theme == 'day' %} #fff {% else %} #333 {% endif %};
+		 color:{% if theme == 'day' %} #333 {% else %} #fff {% endif %};
+		}
+	</style>
+{% if user.is_authenticated %}
+<h1>Welcome {{user.username}}!</h1>
+
+    <p>Logged in as: {{ user.username }}, {{ user.role }}</p>
+
+{% else %}
+<h1>Welcome to the Book Library!</h1>
+
+    <p>Please <a href="{% url 'login' %}">login</a> or <a href="{% url 'register' %}">register</a> to access this page.</p>
+{% endif %}
+
+<h1>Book List</h1>
+<ul>
+    {% for book in books %}
+    <div class="row justify-content-center">
+        <div class="col-md-8"> 
+          <div class="card" style="background-color: #f0f0f0;">
+                <div class="card-header " style="background-color: #d3d3d3a1;">
+                    <span class="font-weight-bold">
+                        <strong>{{ book.title }}</strong> by {{ book.author_name }}
+                    </span> 
+                    <span class="published-date" style="float: right;">
+                        {{ book.published_date|date:"F j, Y" }}
+                    </span>
+                </div>
+                <div class="card-body">
+                    
+                    <p><strong>Kind:</strong> {{ book.kind}}</p>
+                    <p><strong>Summary:</strong> {{ book.summary|truncatechars:80 }}</p>
+                    <a href="{% url 'book_detail' book.id %}"class="btn btn-primary button">İncele</a>
+                    <br/>
+                </div>
+            </div>
+        </div>
+        <br/>
+    </div>
+    <br/>
+{% endfor %}
+
+</ul>
+{% endblock %}
