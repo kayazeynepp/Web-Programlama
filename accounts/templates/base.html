@@ -1,0 +1,85 @@
+{% load static %}
+<html>
+<head>
+	<!-- Zorunlu meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,
+	initial-scale=1, shrink-to-fit=no">
+	<!-- Bootstrap CSS -->
+	<link rel='stylesheet' href="{% static 'css/bootstrap.min.css' %}">
+    <title>Book Library</title>
+</head>
+  <style>
+        body {
+            background-color: {% if theme == 'day' %} #fff {% else %} #333 {% endif %};
+            color: #333;
+        }
+    </style>
+<body>
+
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+		<a class="navbar-brand" href="{% url 'home' %}">Book Library</a>
+
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+		data-target="#navbarCollapse" aria-controls="navbarCollapse"
+		aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+	<div class="collapse navbar-collapse" id="navbarCollapse">
+		{% if user.is_authenticated %}
+			{% if user.role == "author" %}
+				<a href="{% url 'create_book' %}" class="btn btn-primary ml-2">
+					Add Book</a>
+				<a href="{% url 'my_books' %}" class="btn btn-primary ml-2">
+					My Books</a>
+
+			{% endif %}
+            <a href="{% url 'logout' %}" class="btn btn-primary ml-2">
+                Logout</a>
+
+
+        {% else %}
+            <a href="{% url 'login' %}" class="btn btn-primary ml-2">
+                Login</a>
+			<a href="{% url 'register' %}" class="btn btn-primary ml-2">
+				Signup</a>
+        {% endif %}
+
+	</div>
+		 <button id="toggle-theme-btn" class="btn btn-primary ml-2" >Mod Değiştir</button>
+
+		 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ <script>
+        $(document).ready(function() {
+            $('#toggle-theme-btn').click(function() {
+                $.ajax({
+                      url: '{% url "toggle_theme" %}',
+                    method: 'POST',
+                    data: {
+                        csrfmiddlewaretoken: '{{ csrf_token }}', // Include CSRF token
+                    },
+                    success: function(response) {
+                        // Handle success (optional)
+                        console.log('Theme toggled successfully');
+                        location.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle error
+                        console.error('Error toggling theme:', error);
+                    }
+                });
+            });
+        });
+    </script>
+	</nav>
+	<div class="container">
+		{% block content %}
+		{% endblock content %}
+	</div>
+	<script src="{% static 'js/jquery-min.js' %}"></script>
+	<script src = "{% static 'js/bootstrap.min.js' %}"></script>
+
+</body>
+
+</html>

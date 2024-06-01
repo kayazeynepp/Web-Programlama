@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+		body
+		{background-color:{% if theme == 'day' %} #fff {% else %} #333 {% endif %};
+		 color:{% if theme == 'day' %} #333 {% else %} #fff {% endif %};
+		}
+	</style>
+<h2>My Books</h2>
+    <ul>
+        {% for book in books %}
+        {% if book.author_id == user.firebase_id %}
+        <div class="row justify-content-center">
+            <div class="col-md-8"> 
+              <div class="card" style="background-color: #f0f0f0;">
+                    <div class="card-header " style="background-color: #d3d3d3a1;">
+                        <span class="font-weight-bold">
+                            <strong>{{ book.title }}</strong> by {{ book.author.username }}
+                        </span> 
+                        <span class="published-date" style="float: right;">
+                            {{ book.published_date|date:"F j, Y" }}
+                        </span>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Kind:</strong> {{ book.kind}}</p>
+                        <p><strong>Summary:</strong> {{ book.summary|truncatechars:80 }}</p>
+                        <a href="{% url 'delete_book' book.id %}" class="btn btn-primary button" onclick="return confirm('Are you sure you want to delete this book?');">Delete</a>
+                        <br/>
+                    </div>
+                </div>
+            </div>
+            <br/>
+        </div>
+        <br/>
+               
+        {% else %}
+            <p>You have no books.</p>
+        {% endif %}
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>{{ book.title }} - Kitap Detayları</title>
+    <!-- CSS ve JavaScript dosyaları ekleyin -->
+    <style>
+        /* Sayfanın özet ve yorumlar kısmını bulanıklaştıran CSS */
+        .blur-section {
+            filter: blur(4px);
+        }
+
+        /* Mesajı sayfanın ortasında göstermek için CSS */
+        .center-message {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.5);
+            z-index: 1000; /* Sayfanın en üst katmanında yer alır */
+        }
+
+        .center-message p {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+
+        }
+    </style>
+    <style>
+    body {
+    background-color: {% if theme == 'day' %} #fff {% else %} #333 {% endif %};
+    color: {% if theme == 'day' %} #333 {% else %} #fff {% endif %};
+}
+</style>
+</head>
+
+<body>
+    <h1>Book Name: {{ book.title }}</h1>
+    <p><strong>Author:</strong> {{ book.author_name }}</p>
+
+    {% if not user.is_authenticated %}
+        <!-- Kullanıcı giriş yapmadıysa özet ve yorumlar kısmını bulanıklaştır -->
+        <div class="blur-section">
+            <p><strong>Özet:</strong> {{ book.summary }}</p>
+
+            <h2>Comments</h2>
+            <ul>
+                {% for comment in book.comments_set.all %}
+                    <li>
+                        <strong>{{ comment.user_username }}</strong> ({{ comment.created_at }}):
+                        <br>
+                        {{ comment.comment }} {{ comment.sentiment }}
+                    </li>
+                {% empty %}
+                    <p>Henüz yorum yapılmadı.</p>
+                {% endfor %}
+            </ul>
+
+            <h3>Yorum Ekle</h3>
+                {% csrf_token %}
+                <textarea name="comment" rows="4" cols="50" required></textarea>
+                <br>
+                <button type="submit">Yorum Ekle</button>
+            </form>
+        </div>
+
+        <!-- Sayfanın ortasında mesaj gösterme -->
+        <div class="center-message">
+            <div class="login-box">
+                <p>Please Login</p>
+                <div class="buttons">
+                    <a href="{% url 'login' %}" class="btn btn-primary">
+                        Login
+                    </a>
+                    <a href="{% url 'home' %}" class="btn btn-primary ml-2">
+                        Cancel
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="center-message">
+            <div class="login-box">
+                <p>Please Login</p>
+                <div class="buttons">
+                    <a href="{% url 'login' %}" class="btn btn-primary button">
+                        Login
+                    </a>
+                    <a href="{% url 'home' %}" class="btn btn-primary button">
+                        Cancel
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            /* Ortalanmış kutunun genel düzeni */
+            .center-message {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: rgba(255, 255, 255, 0.5);
+                z-index: 1000; /* Sayfanın en üst katmanında yer alır */
+            }
+
+            /* Kutu görünümü ve içeriği */
+            .login-box {
+                background-color: white;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                text-align: center; /* Metinlerin ve butonların ortalanması */
+            }
+
+            /* Butonların boyutlarını eşit yapın */
+            .button {
+                width: 100px; /* Buton genişliği */
+                height: 50px; /* Buton yüksekliği */
+                margin: 10px 0; /* Butonlar arasındaki boşluk */
+                text-align: center;
+                line-height: 40px; /* Butonun yüksekliğiyle aynı, metnin dikey olarak ortalanması için */
+            }
+
+            /* Butonlar için ek stil */
+            .buttons {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin-top: 10px;
+            }
+        </style>
+
+    {% endif %}
+
+    {% if user.is_authenticated %}
+    <!-- Kullanıcı giriş yaptıysa detaylı içerik -->
+    <p><strong>Date:</strong> {{ book.published_date }}</p>
+    <p><strong>Kind:</strong> {{ book.kind }}</p>
+    <p><strong>Summary:</strong> {{ book.summary }}</p>
+
+    <h2>Comments</h2>
+    <ul>
+        {% for comment in comments %}
+            <li>
+                <strong>{{ comment.user_username }}:</strong> (<span style="font-style: italic;">{{ comment.created_at }}</span>):
+                <span style="color:
+                    {% if comment.sentiment == 'positive' %}
+                    #22bc07;
+                    {% elif comment.sentiment == 'negative' %}
+                        red;
+                    {% else %}
+                        black;
+                    {% endif %}
+                    ">{{ comment.comment }}
+                </span>
+            </li>
+        {% empty %}
+            <p>No comment.</p>
+        {% endfor %}
+        <img src="data:image/png;base64,{{ image }}" alt="Graph">
+
+    </ul>
+
+    <h3>Add Comment</h3>
+    <form method="post" action="{% url 'create_comment' book_id=book.id %}">
+        {% csrf_token %}
+        <textarea name="comment" rows="4" cols="50" required></textarea>
+        <br>
+        <button class="btn btn-primary" type="submit">Share</button>
+    </form>
+{% endif %}
+</body>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-box">
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email">
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" id="password" name="password">
+            </div>
+            <div class="buttons">
+                <button type="submit" class="btn btn-primary button">
+                    Login
+                </button>
+                <a href="{% url 'home' %}" class="btn btn-secondary button">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+<style>
+		body
+		{background-color:{% if theme == 'day' %} #fff {% else %} #333 {% endif %};
+		 color: #333;
+		}
+	</style>
+<style>
+    /* Sayfanın ortasında kutuyu yerleştiren CSS */
+    .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 80vh; /* Yüksekliği sayfa yüksekliği ile aynı yap */
+    }
+
+    /* Kutu görünümü ve içeriği */
+    .login-box {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        width: 300px; /* Kutunun genişliğini belirleyin */
+        text-align: center; /* İçeriği ortalayın */
+    }
+
+    /* Butonları eşit boyutlarda yapmak ve metinleri ortalamak için CSS */
+    .button {
+        width: 100px; /* Buton genişliği */
+        height: 40px; /* Buton yüksekliği */
+        margin-top: 10px; /* Üstteki öğeyle boşluk */
+        margin-right: 10px; /* Diğer butonla boşluk */
+        text-align: center; /* Metni yatay olarak ortala */
+        line-height: 40px; /* Metni dikey olarak ortala */
+        padding: 0px;
+    }
+
+    /* Cancel butonunun stilini belirleyin */
+    .btn-secondary {
+        background-color: #6c757d; /* Farklı renk için */
+        color: white;
+        border-radius: 5px;
+        padding: 0px;
+        text-decoration: none;
+    }
+</style>
+
+{% endblock %}

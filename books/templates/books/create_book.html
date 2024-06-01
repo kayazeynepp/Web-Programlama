@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-box">
+        <h2>Create Book</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-primary" type="submit">Create</button>
+        </form>
+    </div>
+</div>
+<style>
+		body
+		{background-color:{% if theme == 'day' %} #fff {% else %} #333 {% endif %};
+		 color: #333;
+		}
+	</style>
+<style>
+    /* Sayfanın ortasında kutuyu yerleştiren CSS */
+    .login-container {
+        margin-top: 20px; /* Butonun üst kısmında boşluk bırakır */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 90vh; /* Yüksekliği sayfa yüksekliği ile aynı yap */
+    }
+
+    /* Kutu görünümü ve içeriği */
+    .login-box {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        width: 400px; /* Kutunun genişliğini belirleyin */
+        text-align: center; /* İçeriği ortalayın */
+    }
+
+    /* Butonları stilize etmek için */
+    .btn-primary {
+        margin-top: 10px; /* Butonun üst kısmında boşluk bırakır */
+        width: 100px; /* Buton genişliği */
+        height: 40px; /* Buton yüksekliği */
+        line-height: 40px; /* Buton içindeki metni dikey olarak ortalar */
+        padding: 0px;
+}
+</style>
+
+{% endblock %}
