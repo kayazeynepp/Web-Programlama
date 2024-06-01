@@ -8,6 +8,6 @@ password=orhan.123456
 
 NOT:
 * Kayıt olurken username alanına tek bir kelime formatında giriş yapılmalıdır.
-* docker-composeup komutu kullanılarak projeyi başlatabilirsiniz.
+* docker-compose up komutu kullanılarak projeyi başlatabilirsiniz.
 * NLTK dosyalarının tamamı yüklenene kadar bekleyiniz.
 * Projemize http://localhost:8000 URL'sinden erişebilirsiniz.
